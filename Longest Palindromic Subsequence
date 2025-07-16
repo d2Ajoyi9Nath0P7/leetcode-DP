@@ -1,0 +1,21 @@
+int longestPalindromeSubseq(string s) {
+        string s1 = s;
+        string s_reverse = string(s.rbegin(),s.rend());
+        int row = s.size();
+        int col = s.size();
+        vector<vector<int>>vec(row+1,vector<int>(col+1,0));
+
+        for(int i = 1 ; i <= row ; i++)
+        {
+            for(int j = 1 ; j <= col; j++){
+                if(s1[i-1] == s_reverse[j-1]){
+                    vec[i][j] = vec[i-1][j-1] + 1; 
+                }
+                else{
+                    vec[i][j] = max(vec[i][j-1],vec[i-1][j]);
+                }
+            }  
+        }
+
+        return vec[row][col];
+    }
