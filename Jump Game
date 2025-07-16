@@ -1,0 +1,21 @@
+bool canJump(vector<int>& N) {
+        int boss = 0;
+        for(int i = 0  ; i < N.size() ;i++)
+        {
+            boss = max(boss, i + N[i]);
+            
+            if(boss >= N.size() - 1)
+            {
+                return true;
+            }
+            else if(i == boss && N[i] == 0)
+            {
+                return false;
+            }
+            else if(i + N[i] > boss)
+            {
+                boss = i + N[i];
+            }
+        }
+        return false;
+    }
