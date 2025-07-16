@@ -1,0 +1,56 @@
+bool isValid(int x,int y,int row,int col,vector<vector<int>>&vis)
+    {
+            if(x >= 0 && x < row && y >= 0 && y < col && vis[x][y] == 0)
+            {
+                return true;
+            }
+            return false;
+    }
+
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat)
+    {
+        int row = mat.size();
+        int col = mat[0].size();
+
+        vector<vector<int>>vis(row,vector<int>(col,0));
+        vector<vector<int>>dis(row,vector<int>(col));
+        queue<pair<int,int>>q;
+
+        int dx[4] = {0,1,0,-1};
+        int dy[4] = {1,0,-1,0};
+
+        for(int i = 0 ; i < mat.size() ; i++)
+        {
+            for(int j = 0; j < mat[0].size() ; j++){
+                if(mat[i][j] == 0)
+                {
+                    dis[i][j] = 0;
+                    vis[i][j] = 1;
+                    q.push({i,j});
+                }
+            }
+        }
+
+        while(!q.empty())
+        {
+            pair<int,int>frnt = q.front();
+
+            int i = frnt.first;
+            int j = frnt.second;
+            q.pop();
+
+            for(int k = 0 ; k < 4; k++)
+            {
+                int new_i = i + dx[k];
+                int new_j = j + dy[k];
+
+                if(isValid(new_i,new_j,row,col,vis) && mat[new_i][new_j] == 1)
+                {
+                    vis[new_i][new_j] = 1;
+                    dis[new_i][new_j] = dis[i][j] + 1;
+                    q.push({new_i,new_j});
+                }
+            }
+        }
+        return dis;
+    }
