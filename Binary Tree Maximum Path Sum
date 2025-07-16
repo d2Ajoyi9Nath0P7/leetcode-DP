@@ -1,0 +1,18 @@
+int max_sum(TreeNode* root,int& max_value)
+    {
+        if(root == NULL)
+        {
+            return 0;
+        }
+        int left = max_sum(root -> left,max_value);//9
+        int right = max_sum(root -> right,max_value);//35
+        int nodeMax = max(max(root -> val + left,root -> val + right),max(root -> val,root -> val + left + right));
+        max_value = max(max_value,nodeMax);
+        int x = max(root -> val,max(root ->val + left,root -> val + right));
+        return x;
+    }
+    int maxPathSum(TreeNode* root) {
+        int max_value = INT_MIN;
+        max_sum(root,max_value);
+        return max_value;
+    }
