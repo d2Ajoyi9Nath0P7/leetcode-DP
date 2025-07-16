@@ -1,0 +1,49 @@
+string solve(string& s)
+    {
+        string LPS = "";
+        if(s.size() <= 1)
+        {
+            return s;
+        }
+        for(int i = 1 ; i < s.size() ; i++)
+        {
+            int low = i;
+            int high = i;
+            while(s[low] == s[high])
+            {
+                low--;
+                high++;
+                if(low == -1 || high == s.size())
+                {
+                    break;
+                }
+            }
+            string tempString = s.substr(low+1,high-low-1);
+            if(tempString.size() > LPS.size())
+            {
+                LPS = tempString;
+            }
+            high = i;
+            low = i - 1;
+            while(s[low] == s[high])
+            {
+                low--;
+                high++;
+                if(low == -1 || high == s.size())
+                {
+                    break;
+                }
+            }
+            tempString = s.substr(low+1,high-low-1);
+            if(tempString.size() > LPS.size())
+            {
+                LPS = tempString;
+            }
+        }
+        return LPS;
+    }
+
+    string longestPalindrome(string s)
+    {
+        return solve(s);
+    }
